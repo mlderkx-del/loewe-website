@@ -1,0 +1,1299 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATELIER B | Luxury Fashion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #e63946;
+            --accent-color: #f1faee;
+            --dark-color: #1d3557;
+            --light-color: #f8f9fa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            overflow-x: hidden;
+            margin: 0;
+            padding-top: 60px !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .top-nav {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 60px !important;
+            background-color: white !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+            z-index: 9999 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 0 50px !important;
+            box-sizing: border-box !important;
+            border-bottom: 1px solid #f1f1f1 !important;
+        }
+
+        .nav-logo img {
+            height: 32px !important;
+            width: 32px !important;
+            object-fit: contain;
+        }
+
+        .nav-menu ul {
+            list-style: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            display: flex !important;
+            gap: 30px !important;
+        }
+
+        .nav-menu a {
+            text-decoration: none !important;
+            color: var(--primary-color) !important;
+            font-size: 13px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            transition: color 0.3s !important;
+        }
+
+        .nav-menu a:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .nav-icons {
+            display: flex !important;
+            gap: 25px !important;
+        }
+
+        .nav-icons a {
+            color: var(--primary-color) !important;
+            font-size: 16px !important;
+            transition: color 0.3s !important;
+        }
+
+        .nav-icons a:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 0 20px !important;
+                height: 50px !important;
+            }
+            .nav-menu {
+                display: none !important;
+            }
+            .nav-icons {
+                gap: 20px !important;
+            }
+            body {
+                padding-top: 50px !important;
+            }
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            background-color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10000 !important;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            transition: transform 0.5s ease-out;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .logo-container.hidden {
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .cursor-effect {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, opacity 0.3s;
+        }
+
+        .video-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            margin-top: -60px;
+            padding-top: 60px;
+        }
+
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+
+        .grid-section {
+            padding: 100px 50px;
+            background-color: white;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .grid-item {
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease, filter 0.5s ease;
+        }
+
+        .grid-item:hover img {
+            transform: scale(1.05);
+            filter: brightness(0.7);
+        }
+
+        .action-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            opacity: 0;
+            transition: all 0.5s ease;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .grid-item:hover .action-overlay {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .grid-item.large {
+            grid-column: span 8;
+            grid-row: span 2;
+        }
+
+        .grid-item.medium {
+            grid-column: span 6;
+            grid-row: span 1;
+        }
+
+        .grid-item.small {
+            grid-column: span 4;
+            grid-row: span 1;
+        }
+
+        .grid-item.tall {
+            grid-column: span 4;
+            grid-row: span 2;
+        }
+
+        .text-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+            transform: translateY(70%);
+            transition: transform 0.5s ease;
+        }
+
+        .dynamic-frame {
+            position: relative;
+        }
+
+        .dynamic-frame::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 2px solid transparent;
+            z-index: 5;
+            transition: all 0.5s ease;
+        }
+
+        .dynamic-frame:hover::before {
+            border-image: linear-gradient(45deg, #ffffff, #f1f1f1, #ffffff) 1;
+            animation: borderAnimation 3s linear infinite;
+        }
+
+        @keyframes borderAnimation {
+            0% {
+                border-image-slice: 1;
+                border-image-source: linear-gradient(45deg, #ffffff, #f1f1f1, #ffffff);
+            }
+            25% {
+                border-image-slice: 1;
+                border-image-source: linear-gradient(135deg, #ffffff, #f1f1f1, #ffffff);
+            }
+            50% {
+                border-image-slice: 1;
+                border-image-source: linear-gradient(225deg, #ffffff, #f1f1f1, #ffffff);
+            }
+            75% {
+                border-image-slice: 1;
+                border-image-source: linear-gradient(315deg, #ffffff, #f1f1f1, #ffffff);
+            }
+            100% {
+                border-image-slice: 1;
+                border-image-source: linear-gradient(45deg, #ffffff, #f1f1f1, #ffffff);
+            }
+        }
+
+        .grid-item:hover .text-overlay {
+            transform: translateY(0);
+        }
+
+        .text-content {
+            max-width: 1200px;
+            margin: 100px auto;
+            padding: 0 50px;
+        }
+
+        .text-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        /* 预约弹窗样式优化 - 增加动画 */
+        #bookingModal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        #bookingModal.show {
+            opacity: 1;
+            visibility: visible;
+            display: flex !important;
+        }
+        #bookingModal .modal-content {
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        #bookingModal.show .modal-content {
+            transform: scale(1);
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .grid-item.large {
+                grid-column: span 4;
+            }
+            
+            .grid-item.medium {
+                grid-column: span 4;
+            }
+            
+            .grid-item.small {
+                grid-column: span 2;
+            }
+            
+            .grid-item.tall {
+                grid-column: span 2;
+            }
+            
+            .grid-section {
+                padding: 50px 20px;
+            }
+            
+            .text-content {
+                padding: 0 20px;
+            }
+            .video-container {
+                margin-top: -50px;
+                padding-top: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <div class="nav-logo">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/d6bfc14578f74bae9fe5fa73f39e6a22~tplv-a9rns2rl98-image.image?rcl=202512132320013F6F73669C3A2F81B8A2&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766244002&amp;x-signature=jUrv%2F7L9%2BSo1NIPOy3YgtBAHIq4%3D" alt="ATELIER B Logo">
+        </div>
+        <div class="nav-menu">
+            <ul>
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#collections">Collections</a></li>
+                <li><a href="#women" onclick="document.getElementById('leftScreen').click(); return false;">GAME</a></li>
+                <li><a href="#men" onclick="document.getElementById('rightScreen').click(); return false;">POP-UP</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+        <div class="nav-icons">
+            <a href="#"><i class="fas fa-search"></i></a>
+            <a href="#"><i class="fas fa-user"></i></a>
+            <a href="#"><i class="fas fa-heart"></i></a>
+            <a href="#"><i class="fas fa-shopping-bag"></i></a>
+        </div>
+    </div>
+
+    <div class="logo-container" id="logoContainer">
+        <div id="particles-js"></div>
+        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/de27fe91043540c2845aced650361649~tplv-a9rns2rl98-image.image?rcl=20251211222223625029C86588DC81DC8F&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766067743&amp;x-signature=Jsjzg79IRgbnRb0%2BTlJl7dSgLxg%3D" alt="LOEWE Logo" class="logo" id="logo">
+    </div>
+    <div class="cursor-effect" id="cursorEffect"></div>
+
+    <section class="video-container" id="home">
+        <video id="overlayVideo" class="video-bg absolute top-0 left-0 w-full h-full object-cover" autoplay="" loop="" muted="" playsinline="" style="display: block; z-index: 0;">
+            <source src="https://www.antonia.it/cdn/shop/videos/c/vp/9816e916b6f6449fb46f3f5678d4de01/9816e916b6f6449fb46f3f5678d4de01.HD-1080p-7.2Mbps-59861145.mp4?v=0" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay" id="splashScreen" style="position: relative; z-index: 10;">
+            <div class="flex flex-col md:flex-row h-full w-full">
+                <div class="left-screen w-full md:w-1/2 h-full bg-transparent hover:bg-black hover:bg-opacity-30 flex flex-col justify-center items-center cursor-pointer transition-all duration-500" id="leftScreen">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6" style="text-align: center;">Game Start</h2>
+                    <p class="text-white text-center px-6 mb-8">Click anywhere to start the game</p>
+                    <button id="enterVideoBtn" class="bg-white text-black px-8 py-3 text-lg font-medium hover:bg-gray-100 transition-all duration-300">Enter Experience</button>
+                </div>
+                
+                <div class="right-screen w-full md:w-1/2 h-full bg-transparent hover:bg-black hover:bg-opacity-30 flex flex-col justify-center items-center cursor-pointer transition-all duration-500" id="rightScreen">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Pop-Up</h2>
+                    <p class="text-white text-center px-6 mb-8">Discover our exclusive offline experiences and events</p>
+                    <button class="bg-white text-black px-8 py-3 text-lg font-medium hover:bg-gray-100 transition-all duration-300">Learn More</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="fullscreen-video-container fixed inset-0 z-50 hidden flex items-center justify-center" id="fullscreenVideoContainer">
+            <video id="fullscreenVideo" class="w-full h-full object-cover" controls="" playsinline="" preload="metadata" loop="">
+                <source src="https://www.antonia.it/cdn/shop/videos/c/vp/9816e916b6f6449fb46f3f5678d4de01/9816e916b6f6449fb46f3f5678d4de01.HD-1080p-7.2Mbps-59861145.mp4?v=0" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button id="closeVideoBtn" class="absolute top-10 right-10 text-white text-4xl hover:text-gray-300 transition-colors duration-300">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="offline-experience-container fixed inset-0 z-50 hidden overflow-y-auto" id="offlineExperienceContainer" style="z-index: 20000;">
+            <div class="relative w-full h-screen bg-gray-900">
+                <video class="absolute top-0 left-0 w-full h-full object-cover z-0" src="https://www.antonia.it/cdn/shop/videos/c/vp/9816e916b6f6449fb46f3f5678d4de01/9816e916b6f6449fb46f3f5678d4de01.HD-1080p-7.2Mbps-59861145.mp4?v=0" controls="" playsinline="" preload="metadata"></video>
+                <div class="absolute inset-0 flex flex-col justify-center items-center pointer-events-none">
+                    <div class="scroll-indicator absolute bottom-10">
+                        <i class="fas fa-chevron-down text-white text-3xl animate-bounce"></i>
+                    </div>
+                </div>
+                <button id="closeExperienceBtn" class="absolute top-10 right-10 text-white text-4xl hover:text-gray-300 transition-colors duration-300 z-10 pointer-events-auto">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="bg-white min-h-screen">
+                <div class="container mx-auto px-6 py-20">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+                        <div>
+                            <!-- 替换为你的图片URL -->
+                            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/176ff059a59547cebe49478eccf484ff~tplv-a9rns2rl98-image.image?rcl=2025121522040681008EADBBADC1DBB68B&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766412254&amp;x-signature=SehBxQlvwn%2FJvtsPahGNuQZG63A%3D" alt="Luxury Atelier" class="w-full h-auto rounded-lg shadow-xl">
+                        </div>
+                        <div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6">The Experience</h3>
+                            <p class="text-lg mb-6">An immersive offline experience where LOEWE's craftsmanship meets On's performance technology.
+Set within a hemispherical, tech-driven space, movement becomes a shared language — connecting urban structure with natural motion. </p>
+                            <p class="text-lg mb-8">Participants step into a controlled environment designed to blur boundaries between fashion, function, and physical experience.
+</p>
+
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+                        <div class="order-2 md:order-1">
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6">The Journey</h3>
+                            <p class="text-lg mb-6">Visitors enter the space in pairs, wearing co-branded CLOUDTILT shoes equipped with foot-tracking technology.
+Each participant represents a different perspective — LOEWE (urban) and On (outdoor).
+</p>
+                            <p class="text-lg mb-8">Through synchronized real-world movement, two separate environments gradually merge into one unified world, expressing the collection's core philosophy:
+from contrast to harmony, from city to nature.
+</p>
+
+                        </div>
+                        <div class="order-1 md:order-2">
+                            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/171844afab7148cf9cb09d7d79a85a8b~tplv-a9rns2rl98-image.image?rcl=20251215220844E873DC5C7F6EB741F60D&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766412530&amp;x-signature=IS5hgd5x6as95SXGSDVSCXqNlZg%3D" alt="Private Viewing" class="w-full h-auto rounded-lg shadow-xl">
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-6">Beyond the Space
+</h3>
+                        <p class="text-lg mb-8" style="text-align: center;">
+                       Upon completing the experience, participants receive a limited-edition leather keepsake embossed with the game’s ripple motif.
+A personal experience archive — including recorded moments from the journey — is automatically saved to your account.
+
+The experience extends beyond the physical space, becoming a lasting connection between movement, memory, and design. 
+</p>
+                        <button class="bg-black text-white px-8 py-3 text-lg font-medium hover:bg-gray-800 transition-all duration-300" onclick="openSubscribeModal()">Subscribe to Updates</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down text-white text-3xl"></i>
+        </div>
+    </section>
+
+    <section class="grid-section" id="collections">
+        <div class="grid-container">
+            <div class="grid-item large" style="grid-column: span 12; grid-row: span 3;">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/b42fe7be22c2495a990016f538fb542a~tplv-a9rns2rl98-image.image?rcl=202512152245343645C7585582CD9C67A0&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766414735&amp;x-signature=wpaMu1xCJIc9Jw%2FypjByexw1t9s%3D" alt="Luxury Atelier" class="gallery-img dynamic-frame" data-group="atelier">
+                <div class="text-overlay">
+                    <h3 class="text-2xl font-bold">LOEWE × On
+</h3>
+                    <p>SYNC — An Immersive Experience</p>
+
+                </div>
+            </div>
+            <div class="grid-item medium" id="women">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/8fe8220ae4b8403987a3941a80190173~tplv-a9rns2rl98-image.image?rcl=2025121122420307C8812C33DCCCCA2D33&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766068925&amp;x-signature=FhoB1BUNXVGEfAKIAErfb%2FRZh9s%3D" alt="Luxury Handbag" class="gallery-img" data-group="collection">
+                <div class="text-overlay">
+                    <h3 class="text-xl font-bold">Urban Craft
+</h3>
+                    <p>A study of form, texture, and movement within the city.</p>
+                    <div class="flex space-x-2 mt-2">
+                        <button class="prev-img bg-white bg-opacity-50 hover:bg-opacity-70 text-black p-1 rounded-full text-sm" data-group="collection">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="next-img bg-white bg-opacity-50 hover:bg-opacity-70 text-black p-1 rounded-full text-sm" data-group="collection">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item medium" id="men">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/ebe98c2cf2094801b826f8310538cbb1~tplv-a9rns2rl98-image.image?rcl=20251211224214FF686FDE31A7D9CB2D26&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766068935&amp;x-signature=zNAE08oYEUgOQ6DmkY4Pq71e%2Buk%3D" alt="Fashion Model" class="gallery-img" data-group="model">
+                <div class="text-overlay">
+                    <h3 class="text-xl font-bold">Engineered Motion
+</h3>
+                    <p>Performance technology expressed through movement.</p>
+                    <div class="flex space-x-2 mt-2">
+                        <button class="prev-img bg-white bg-opacity-50 hover:bg-opacity-70 text-black p-1 rounded-full text-sm" data-group="model">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="next-img bg-white bg-opacity-50 hover:bg-opacity-70 text-black p-1 rounded-full text-sm" data-group="model">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-content" id="about">
+            <p><strong>“An immersive journey that extends beyond the runway.”</strong>
+</p>
+            <p>“Through a multi-sensory experience, users explore movement, space, and design as a continuous narrative — where inspiration is not explained, but experienced.”
+</p>
+        </div>
+
+        <div class="grid-container" style="grid-gap: 0; margin-top: 0; margin-bottom: 0; padding: 0;">
+            <!-- 大型主视觉 -->
+            <div class="grid-item relative overflow-hidden group cursor-pointer" style="grid-column: span 8; grid-row: span 2; height: 80vh;">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/38d761530f7b4a408155401d79b037c6~tplv-a9rns2rl98-image.image?rcl=2025121122514604C7435BFD4553011213&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766069507&amp;x-signature=QSoay66HRHD%2FxFqgv9MbNj0TPVs%3D" alt="Modern Elegance" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-end">
+                    <div class="p-8 text-white">
+                        <h3 class="text-3xl font-bold mb-3">Movement, Refined</h3>
+                        <p class="text-lg max-w-md mb-6">A contemporary expression of the body, where form, motion, and craftsmanship converge.</p>
+                        <button class="bg-white text-black px-6 py-3 text-sm font-medium hover:bg-gray-200 transition-all duration-300">Explore Collection</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 垂直长条 -->
+            <div class="grid-item relative overflow-hidden group cursor-pointer" style="grid-column: span 4; grid-row: span 2; height: 80vh;">
+                <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/c98c9793e1ec4496a164038d0890e5ed~tplv-a9rns2rl98-image.image?rcl=20251211230037141AFD906061088043F1&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766070038&amp;x-signature=%2BtKKwf%2FdXKH4rhZo3NJuvOEHvHs%3D" alt="The Journey" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex flex-col justify-end items-center text-center p-8">
+                    <div class="text-white max-w-xs">
+                        <h3 class="text-2xl font-bold mb-3">The Journey</h3>
+                        <p class="text-sm mb-6">An immersive experience through our heritage and innovation.</p>
+                        <button class="bg-white text-black px-6 py-2 text-xs font-medium hover:bg-gray-200 transition-all duration-300 w-full">Discover</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 工艺细节 -->
+            <div class="grid-item relative overflow-hidden group cursor-pointer" style="grid-column: span 5; grid-row: span 1; height: 60vh;">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/3d4a1258b53d47b199f72514f233c789~tplv-a9rns2rl98-image.image?rcl=2025121122512024810B79D029DEE03A08&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766069482&amp;x-signature=rkRY1Ggb1pozb7AsTQgk%2F3hUXN0%3D" alt="Craftsmanship" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-end">
+                    <div class="p-8 text-white">
+                        <h3 class="text-2xl font-bold mb-3">Craftsmanship</h3>
+                        <p class="text-sm max-w-md mb-4">Exquisite attention to detail in every creation.</p>
+                        <button class="bg-transparent border border-white text-white px-6 py-2 text-sm font-medium hover:bg-white/10 transition-all duration-300">Learn More</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 传承 -->
+            <div class="grid-item relative overflow-hidden group cursor-pointer" style="grid-column: span 7; grid-row: span 1; height: 60vh;">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/e3543505d13e4b759965d9ffa80db204~tplv-a9rns2rl98-image.image?rcl=2025121122513325B801247A831FDF62DC&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766069494&amp;x-signature=xQN%2FeaxJcyq221gcGIM6Ls4QNSg%3D" alt="Heritage" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-end">
+                    <div class="p-8 text-white">
+                        <h3 class="text-2xl font-bold mb-3">Shared Heritage</h3>
+                        <p class="text-sm max-w-md mb-4">A contemporary interpretation of craftsmanship, carried forward through movement and collaboration.</p>
+                        <button class="bg-transparent border border-white text-white px-6 py-2 text-sm font-medium hover:bg-white/10 transition-all duration-300">Our Story</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-content">
+            <p><strong>“An experiential narrative built through movement and anticipation.”</strong></p>
+            <p>“The journey unfolds progressively, guiding participants through space as perception, rhythm, and synchronization shape each moment of the experience.”</p>
+<p></p>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-item small" style="grid-column: span 3; grid-row: span 1;">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/230722ccff1b4c8dbe2a1b971fce91aa~tplv-a9rns2rl98-image.image?rcl=202512112303277A5DF4CE6F4719B9BAD1&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766070207&amp;x-signature=e0hVQvcQ12nLNrQ5l4K%2FaYImijI%3D" alt="Model Portrait">
+                <div class="text-overlay">
+                    <h4 class="font-bold">Natural Flow</h4>
+                </div>
+            </div>
+            <div class="grid-item small" style="grid-column: span 3; grid-row: span 1;">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/9779382183bd487396f073be9f18dd3f~tplv-a9rns2rl98-image.image?rcl=20251211230337AB8C465F71F5D996497B&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766070218&amp;x-signature=dDKczuclI%2BaPqRm7lBwS40TZH7Y%3D" alt="Product Detail">
+                <div class="text-overlay">
+                    <h4 class="font-bold">Beyond Terrain</h4>
+                </div>
+            </div>
+            <div class="grid-item large" style="grid-column: span 12; grid-row: span 3;">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/970c5f77c8c547669b402237f63c99eb~tplv-a9rns2rl98-image.image?rcl=20251211225238D1B14D98A9E1125D7A81&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766069559&amp;x-signature=ylX2HPWujALUMDWiWjbmHAnsIEA%3D" alt="Atelier Interior">
+                <div class="text-overlay">
+                    <h3 class="text-2xl font-bold">The Experience</h3>
+                    <p>A shared journey where movement connects craft, technology, and space.</p>
+                </div>
+                <div class="action-overlay">
+                    <!-- 替换为函数调用，统一触发逻辑 -->
+                    <button class="main-action bg-white text-black px-8 py-3 font-medium hover:bg-gray-100 transition-all duration-300" onclick="openBookingModal()">Book offline experience</button>
+                    <div class="secondary-actions flex space-x-4 mt-4">
+                        <button class="secondary-action border border-white text-white px-6 py-2 hover:bg-white hover:text-black transition-all duration-300">Explore capsule</button>
+                        <button class="secondary-action border border-white text-white px-6 py-2 hover:bg-white hover:text-black transition-all duration-300">Shop online</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 预约弹窗 - 增加modal-content类 -->
+    <div id="bookingModal" class="fixed inset-0 z-[30000] items-center justify-center bg-black bg-opacity-70 hidden">
+        <div class="bg-white rounded-lg w-full max-w-2xl mx-4 p-8 relative modal-content">
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-black text-2xl hover:text-gray-600 transition-colors duration-300">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-3xl font-bold mb-6 text-center">Book Your Experience</h2>
+            <form id="bookingForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium mb-2">Full Name</label>
+                        <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium mb-2">Email Address</label>
+                        <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium mb-2">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                    </div>
+                    <div>
+                        <label for="shoeSize" class="block text-sm font-medium mb-2">Shoe Size</label>
+                        <input type="number" id="shoeSize" name="shoeSize" min="35" max="50" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="experienceType" class="block text-sm font-medium mb-2">Experience Type</label>
+                    <select id="experienceType" name="experienceType" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                        <option value="">Select an experience</option>
+                        <option value="atelier">The Atelier Experience</option>
+                        <option value="private">Private Viewing</option>
+                        <option value="event">Upcoming Event</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label for="date" class="block text-sm font-medium mb-2">Preferred Date</label>
+                    <input type="date" id="date" name="date" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="" lang="en">
+                </div>
+                <div class="mb-8">
+                    <label for="time" class="block text-sm font-medium mb-2">Preferred Time</label>
+                    <select id="time" name="time" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                        <option value="">Select a time slot</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="16:00">4:00 PM</option>
+                        <option value="17:00">5:00 PM</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-black text-white py-3 font-medium hover:bg-gray-800 transition-all duration-300">Submit Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 查看预约弹窗 -->
+    <div id="viewingModal" class="fixed inset-0 z-[30000] flex items-center justify-center bg-black bg-opacity-70 hidden">
+        <div class="bg-white rounded-lg w-full max-w-lg mx-4 p-8 relative modal-content">
+            <button onclick="closeViewingModal()" class="absolute top-4 right-4 text-black text-2xl hover:text-gray-600 transition-colors duration-300">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-3xl font-bold mb-6 text-center">Schedule Private Viewing</h2>
+            <form id="viewingForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="viewingName" class="block text-sm font-medium mb-2">Full Name</label>
+                        <input type="text" id="viewingName" name="viewingName" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                    </div>
+                    <div>
+                        <label for="viewingEmail" class="block text-sm font-medium mb-2">Email Address</label>
+                        <input type="email" id="viewingEmail" name="viewingEmail" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                    </div>
+                    <div>
+                        <label for="viewingPhone" class="block text-sm font-medium mb-2">Phone Number</label>
+                        <input type="tel" id="viewingPhone" name="viewingPhone" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                    </div>
+                    <div>
+                        <label for="viewingCollection" class="block text-sm font-medium mb-2">Collection Interest</label>
+                        <select id="viewingCollection" name="viewingCollection" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                            <option value="">Select collection</option>
+                            <option value="ready-to-wear">Ready-to-Wear</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="footwear">Footwear</option>
+                            <option value="all">All Collections</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="viewingDate" class="block text-sm font-medium mb-2">Preferred Date</label>
+                    <input type="date" id="viewingDate" name="viewingDate" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                </div>
+                <div class="mb-8">
+                    <label for="viewingTime" class="block text-sm font-medium mb-2">Preferred Time</label>
+                    <select id="viewingTime" name="viewingTime" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" required="">
+                        <option value="">Select time slot</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="16:00">4:00 PM</option>
+                        <option value="17:00">5:00 PM</option>
+                    </select>
+                </div>
+                <div class="mb-8">
+                    <label for="viewingNotes" class="block text-sm font-medium mb-2">Special Requests</label>
+                    <textarea id="viewingNotes" name="viewingNotes" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" placeholder="Tell us about any specific items you're interested in or special requirements..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-black text-white py-3 font-medium hover:bg-gray-800 transition-all duration-300">Request Viewing</button>
+            </form>
+        </div>
+    </div>
+    <div id="subscribeModal" class="fixed inset-0 z-[30000] flex items-center justify-center bg-black bg-opacity-70 hidden">
+        <div class="bg-white rounded-lg w-full max-w-md mx-4 p-8 relative modal-content">
+            <button onclick="closeSubscribeModal()" class="absolute top-4 right-4 text-black text-2xl hover:text-gray-600 transition-colors duration-300">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-3xl font-bold mb-6 text-center">Subscribe to Updates</h2>
+            <form id="subscribeForm">
+                <div class="mb-6">
+                    <label for="subscribeEmail" class="block text-sm font-medium mb-2">Email Address</label>
+                    <input type="email" id="subscribeEmail" name="subscribeEmail" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your email address" required="">
+                </div>
+                <div class="mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="w-5 h-5 text-black border-gray-300 rounded focus:ring-black" required="">
+                        <span class="ml-2 text-sm">I agree to receive marketing communications and can unsubscribe at any time.</span>
+                    </label>
+                </div>
+                <button type="submit" class="w-full bg-black text-white py-3 font-medium hover:bg-gray-800 transition-all duration-300">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container mx-auto">
+            <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/7ad79ad13110492f91b7bac5bc3ed30b~tplv-a9rns2rl98-image.image?rcl=20251211224255DE60E41DA5279196B7E1&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1766068975&amp;x-signature=Ok5x2wbSWLIiKlY27sOFbMG9RkY%3D" alt="ATELIER B Logo" class="h-16 mx-auto mb-6">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-white hover:text-gray-300"><i class="fab fa-instagram text-2xl"></i></a>
+                <a href="#" class="text-white hover:text-gray-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                <a href="#" class="text-white hover:text-gray-300"><i class="fab fa-twitter text-2xl"></i></a>
+                <a href="#" class="text-white hover:text-gray-300"><i class="fab fa-pinterest text-2xl"></i></a>
+            </div>
+            <p class="text-gray-400">© 2025 ATELIER B. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#000000"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#000000",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        document.getElementById('logo').addEventListener('click', function() {
+            const particlesCanvas = document.querySelector('#particles-js canvas');
+            if (particlesCanvas) {
+                particlesCanvas.style.transition = 'opacity 0.8s ease-out';
+                particlesCanvas.style.opacity = '0';
+            }
+            
+            const logo = document.getElementById('logo');
+            logo.style.transition = 'transform 1s ease-out, opacity 1s ease-out';
+            logo.style.transform = 'scale(1.5)';
+            logo.style.opacity = '0';
+            
+            const logoContainer = document.getElementById('logoContainer');
+            logoContainer.style.transition = 'opacity 1s ease-out';
+            logoContainer.style.opacity = '0';
+            
+            setTimeout(function() {
+                logoContainer.classList.add('hidden');
+            }, 1000);
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('#logo')) return;
+            
+            const ripple = document.createElement('div');
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.width = '0';
+            ripple.style.height = '0';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            ripple.style.zIndex = '9998';
+            ripple.style.transition = 'width 0.8s ease-out, height 0.8s ease-out, opacity 0.8s ease-out';
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.style.width = '100px';
+                ripple.style.height = '100px';
+                ripple.style.opacity = '0';
+            }, 10);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 800);
+            
+            const cursorEffect = document.getElementById('cursorEffect');
+            cursorEffect.style.transition = 'width 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out';
+            cursorEffect.style.width = '40px';
+            cursorEffect.style.height = '40px';
+            cursorEffect.style.opacity = '0.8';
+            
+            setTimeout(() => {
+                cursorEffect.style.width = '20px';
+                cursorEffect.style.height = '20px';
+                cursorEffect.style.opacity = '0.3';
+            }, 200);
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            const cursorEffect = document.getElementById('cursorEffect');
+            cursorEffect.style.left = e.clientX + 'px';
+            cursorEffect.style.top = e.clientY + 'px';
+        });
+
+        setTimeout(function() {
+            const logoContainer = document.getElementById('logoContainer');
+            if (!logoContainer.classList.contains('hidden')) {
+                logoContainer.style.transition = 'opacity 0.5s ease-out';
+                logoContainer.style.opacity = '0';
+                setTimeout(function() {
+                    logoContainer.classList.add('hidden');
+                }, 500);
+            }
+        }, 2500);
+
+        const imageGroups = {
+            'atelier': [
+                "https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/8a94ff642e4242148d81d2c432ab85e8~tplv-a9rns2rl98-image.image?rcl=2025121122175692B66E831BCDC7CB98B0&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1768054789&amp;x-signature=dp4JrcDJmqdiYBcCoP3xPAB5OvQ%3D",
+                "https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/fafab15d2bd042bea90c8fc16965aa88~tplv-a9rns2rl98-image.image?rcl=2025121122175692B66E831BCDC7CB98B0&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1768054788&amp;x-signature=KpfKmWEFApr83wBR8%2BW11GVU%2BI0%3D",
+                "https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/d25a28a5ec9e4001b83386b280d15ce5~tplv-a9rns2rl98-image.image?rcl=2025121122175692B66E831BCDC7CB98B0&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1768054788&amp;x-signature=j%2B7uuND3yhZgaqcx%2FL7QXtZgQeo%3D"
+            ],
+            'collection': [
+                "https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/fafab15d2bd042bea90c8fc16965aa88~tplv-a9rns2rl98-image.image?rcl=2025121122175692B66E831BCDC7CB98B0&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1768054788&amp;x-signature=KpfKmWEFApr83wBR8%2BW11GVU%2BI0%3D",
+                "https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/d25a28a5ec9e4001b83386b280d15ce5~tplv-a9rns2rl98-image.image?rcl=2025121122175692B66E831BCDC7CB98B0&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1768054788&amp;x-signature=j%2B7uuND3yhZgaqcx%2FL7QXtZgQeo%3D",
+                "https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/8a94ff642e4242148d81d2c432ab85e8~tplv-a9rns2rl98-image.image?rcl=2025121122175692B66E831BCDC7CB98B0&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1768054789&amp;x-signature=dp4JrcDJmqdiYBcCoP3xPAB5OvQ%3D"
+            ],
+            'model': [
+                "https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/d25a28a5ec9e4001b83386b280d15ce5~tplv-a9rns2rl98-image.image?rcl=2025121122175692B66E831BCDC7CB98B0&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1768054788&amp;x-signature=j%2B7uuND3yhZgaqcx%2FL7QXtZgQeo%3D",
+                "https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/8a94ff642e4242148d81d2c432ab85e8~tplv-a9rns2rl98-image.image?rcl=2025121122175692B66E831BCDC7CB98B0&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1768054789&amp;x-signature=dp4JrcDJmqdiYBcCoP3xPAB5OvQ%3D",
+                "https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/fafab15d2bd042bea90c8fc16965aa88~tplv-a9rns2rl98-image.image?rcl=2025121122175692B66E831BCDC7CB98B0&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1768054788&amp;x-signature=KpfKmWEFApr83wBR8%2BW11GVU%2BI0%3D"
+            ]
+        };
+
+        const currentImageIndices = {
+            'atelier': 0,
+            'collection': 0,
+            'model': 0
+        };
+
+
+
+        const leftScreen = document.getElementById('leftScreen');
+        const rightScreen = document.getElementById('rightScreen');
+        const fullscreenVideoContainer = document.getElementById('fullscreenVideoContainer');
+        const offlineExperienceContainer = document.getElementById('offlineExperienceContainer');
+        const closeVideoBtn = document.getElementById('closeVideoBtn');
+        const closeExperienceBtn = document.getElementById('closeExperienceBtn');
+        const splashScreen = document.getElementById('splashScreen');
+        const fullscreenVideo = document.getElementById('fullscreenVideo');
+
+        console.log('Elements loaded:', {
+            leftScreen: !!leftScreen,
+            rightScreen: !!rightScreen,
+            fullscreenVideoContainer: !!fullscreenVideoContainer,
+            fullscreenVideo: !!fullscreenVideo,
+            overlayVideo: !!document.getElementById('overlayVideo')
+        });
+
+        const overlayVideo = document.getElementById('overlayVideo');
+        if (overlayVideo) {
+            overlayVideo.preload = 'auto';
+            overlayVideo.load();
+            
+            overlayVideo.play().catch(error => {
+                console.log('Background video autoplay prevented:', error);
+            });
+        }
+
+        const enterExperienceBtn = document.getElementById('enterVideoBtn');
+        if (enterExperienceBtn) {
+            enterExperienceBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Enter Experience button clicked');
+                openFullscreenVideo();
+            });
+        } else {
+            console.warn('Enter Experience button not found!');
+        }
+
+        if (leftScreen) {
+            leftScreen.addEventListener('click', function(e) {
+                if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                    return;
+                }
+                console.log('Left screen clicked');
+                openFullscreenVideo();
+            });
+        }
+
+        function openFullscreenVideo() {
+            console.log('Opening fullscreen video...');
+            
+            splashScreen.style.transition = 'opacity 0.5s ease-out';
+            splashScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                splashScreen.style.display = 'none';
+                
+                fullscreenVideoContainer.classList.remove('hidden');
+                fullscreenVideoContainer.style.display = 'flex';
+                
+                if (fullscreenVideo) {
+                    if (fullscreenVideo.readyState >= 1) {
+                        fullscreenVideo.play().catch(error => {
+                            console.warn('Video play error:', error);
+                        });
+                    } else {
+                        fullscreenVideo.addEventListener('canplay', function playVideo() {
+                            fullscreenVideo.play().catch(error => {
+                                console.warn('Video play error after loading:', error);
+                            });
+                            fullscreenVideo.removeEventListener('canplay', playVideo);
+                        });
+                    }
+                }
+                
+                document.body.style.overflow = 'hidden';
+            }, 500);
+        }
+
+        if (rightScreen) {
+            rightScreen.addEventListener('click', function() {
+                splashScreen.style.opacity = '0';
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                    offlineExperienceContainer.classList.remove('hidden');
+                    offlineExperienceContainer.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                }, 500);
+            });
+        }
+
+        if (closeVideoBtn) {
+            closeVideoBtn.addEventListener('click', function() {
+                fullscreenVideoContainer.classList.add('hidden');
+                fullscreenVideoContainer.style.display = 'none';
+                splashScreen.style.display = 'flex';
+                setTimeout(() => {
+                    splashScreen.style.opacity = '1';
+                    document.body.style.overflow = 'auto';
+                }, 100);
+            });
+        }
+
+        if (closeExperienceBtn) {
+            closeExperienceBtn.addEventListener('click', function() {
+                offlineExperienceContainer.classList.add('hidden');
+                offlineExperienceContainer.style.display = 'none';
+                splashScreen.style.display = 'flex';
+                setTimeout(() => {
+                    splashScreen.style.opacity = '1';
+                    document.body.style.overflow = 'auto';
+                }, 100);
+            });
+        }
+
+        document.querySelectorAll('.nav-menu a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navHeight = document.querySelector('.top-nav').offsetHeight;
+                    window.scrollTo({
+                        top: targetElement.offsetTop - navHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ========== 预约弹窗核心逻辑 ==========
+        // 打开预约弹窗
+        function openBookingModal() {
+            // 防止页面跳转
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // 禁止背景滚动
+        }
+
+        // 关闭预约弹窗
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto'; // 恢复背景滚动
+        }
+
+        // 点击弹窗外部关闭弹窗
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookingModal();
+            }
+        });
+
+        // ========== 订阅弹窗逻辑 ==========
+        // 打开订阅弹窗
+        function openSubscribeModal() {
+            // 防止页面跳转
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const modal = document.getElementById('subscribeModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // 禁止背景滚动
+        }
+
+        // 关闭订阅弹窗
+        function closeSubscribeModal() {
+            const modal = document.getElementById('subscribeModal');
+            modal.classList.remove('show');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto'; // 恢复背景滚动
+        }
+
+        // 点击弹窗外部关闭订阅弹窗
+        document.getElementById('subscribeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSubscribeModal();
+            }
+        });
+
+        // 订阅表单提交逻辑
+        document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('subscribeEmail');
+            const checkbox = this.querySelector('input[type="checkbox"]');
+            
+            // 简单的表单验证
+            if (!emailInput.value || !checkbox.checked) {
+                alert('Please enter your email address and agree to the terms.');
+                return;
+            }
+            
+            // 模拟订阅成功
+            alert('Thank you for subscribing! You will receive our latest updates and event invitations.');
+            closeSubscribeModal();
+            this.reset();
+        });
+
+        // ========== 查看预约弹窗逻辑 ==========
+        // 打开查看预约弹窗
+        function openViewingModal() {
+            // 防止页面跳转
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const modal = document.getElementById('viewingModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // 禁止背景滚动
+        }
+
+        // 关闭查看预约弹窗
+        function closeViewingModal() {
+            const modal = document.getElementById('viewingModal');
+            modal.classList.remove('show');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto'; // 恢复背景滚动
+        }
+
+        // 点击弹窗外部关闭查看预约弹窗
+        document.getElementById('viewingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeViewingModal();
+            }
+        });
+
+        // 查看预约表单提交逻辑
+        document.getElementById('viewingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 简单的表单验证
+            const requiredFields = this.querySelectorAll('[required]');
+            let isFormValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    isFormValid = false;
+                    field.style.borderColor = '#e63946';
+                    setTimeout(() => {
+                        field.style.borderColor = '#d1d5db';
+                    }, 2000);
+                }
+            });
+            
+            if (isFormValid) {
+                // 模拟提交成功
+                alert('Your private viewing request has been submitted successfully. Our client advisor will contact you shortly to confirm the details.');
+                closeViewingModal();
+                this.reset();
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        });
+
+        // 表单提交逻辑优化
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 简单的表单验证提示
+            const requiredFields = this.querySelectorAll('[required]');
+            let isFormValid = true;
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    isFormValid = false;
+                    field.style.borderColor = '#e63946';
+                    // 添加验证提示
+                    setTimeout(() => {
+                        field.style.borderColor = '#d1d5db';
+                    }, 2000);
+                }
+            });
+
+            if (isFormValid) {
+                alert('Booking request submitted successfully! We will contact you shortly to confirm your appointment.');
+                closeBookingModal();
+                this.reset();
+            } else {
+                alert('Please fill in all required fields!');
+            }
+        });
+    </script>
+
+</body></html>

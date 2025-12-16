@@ -462,10 +462,15 @@
         </div>
         
         <div class="fullscreen-video-container fixed inset-0 z-50 hidden flex items-center justify-center" id="fullscreenVideoContainer">
-            <video id="fullscreenVideo" class="w-full h-full object-cover" controls="" playsinline="" preload="metadata" loop="">
-                <source src="https://www.antonia.it/cdn/shop/videos/c/vp/9816e916b6f6449fb46f3f5678d4de01/9816e916b6f6449fb46f3f5678d4de01.HD-1080p-7.2Mbps-59861145.mp4?v=0" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+           <iframe
+             id="fullscreenVideo"
+             class="w-full h-full object-cover"
+             src="https://www.youtube.com/embed/oIsPr-kOYx4?autoplay=0&controls=1&playsinline=1&rel=0"
+             title="final"
+             frameborder="0"
+             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+             allowfullscreen>
+            </iframe>
             <button id="closeVideoBtn" class="absolute top-10 right-10 text-white text-4xl hover:text-gray-300 transition-colors duration-300">
                 <i class="fas fa-times"></i>
             </button>
